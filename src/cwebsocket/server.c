@@ -454,12 +454,12 @@ int cwebsocket_server_read_data(cwebsocket_connection *connection) {
 
 		size_t utf8_code_points = 0;
 		if(utf8_count_code_points((uint8_t *)payload, &utf8_code_points)) {
-			syslog(LOG_ERR, "cwebsocket_server_read_data: received %llu byte malformed utf-8 text payload: %s\n", payload_length, payload);
+			syslog(LOG_ERR, "cwebsocket_server_read_data: received %lu byte malformed utf-8 text payload: %s\n", payload_length, payload);
 			cwebsocket_server_onerror(connection, "received malformed utf-8 payload");
 			return -1;
 		}
 
-		syslog(LOG_DEBUG, "cwebsocket_server_read_data: received %llu byte text payload: %s", payload_length, payload);
+		syslog(LOG_DEBUG, "cwebsocket_server_read_data: received %lu byte text payload: %s", payload_length, payload);
 
 		if(connection->subprotocol != NULL && connection->subprotocol->onmessage != NULL) {
 
@@ -502,7 +502,7 @@ int cwebsocket_server_read_data(cwebsocket_connection *connection) {
 	}
 	else if(frame.fin && frame.opcode == BINARY_FRAME) {
 
-		syslog(LOG_DEBUG, "cwebsocket_server_read_data: received BINARY payload. bytes=%lld", payload_length);
+		syslog(LOG_DEBUG, "cwebsocket_server_read_data: received BINARY payload. bytes=%lu", payload_length);
 
 		char payload[payload_length];
 		memcpy(payload, &data[header_length], payload_length);
@@ -570,7 +570,7 @@ int cwebsocket_server_read_data(cwebsocket_connection *connection) {
 		for(i=0; i<payload_length; i++) {
 			reason[i] = reason[i] ^ frame.masking_key[i%4];
 		}
-		syslog(LOG_DEBUG, "cwebsocket_server_read_data: received CLOSE control frame. payload_length=%llu, code=%i, reason=%s", payload_length, code, reason);
+		syslog(LOG_DEBUG, "cwebsocket_server_read_data: received CLOSE control frame. payload_length=%lu, code=%i, reason=%s", payload_length, code, reason);
 		cwebsocket_server_close_connection(connection, (uint32_t)code, (const char *) reason);
 		return 0;
 	}
@@ -630,7 +630,7 @@ ssize_t cwebsocket_server_write_data(cwebsocket_connection *connection, const ch
 		return -1;
 	}
 
-	syslog(LOG_DEBUG, "cwebsocket_server_write_data: bytes_written=%zu, frame_length=%i, opcode=%#04x, payload_len=%llu, payload=%s\n",
+	syslog(LOG_DEBUG, "cwebsocket_server_write_data: bytes_written=%zu, frame_length=%i, opcode=%#04x, payload_len=%lu, payload=%s\n",
 			bytes_written, frame_length, code, payload_len, data);
 
 	return bytes_written;
