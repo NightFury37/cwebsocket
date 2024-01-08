@@ -23,7 +23,6 @@
  */
 
 #include <signal.h>
-#include "cwebsocket/server.h"
 #include "cwebsocket/subprotocol/echo/echo_server.h"
 
 void server_signal_handler(int sig) {

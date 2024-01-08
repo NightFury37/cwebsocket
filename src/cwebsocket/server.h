@@ -72,7 +72,7 @@ typedef struct {
 	cwebsocket_message *message;
 } cwebsocket_server_thread_args;
 
-cwebsocket_server *websocket_server;
+cwebsocket_server *websocket_server();
 
 // "public"
 void cwebsocket_server_init(int port, cwebsocket_subprotocol *subprotocols[], int subprotocol_len);

@@ -24,6 +24,12 @@
 
 #include "server.h"
 
+cwebsocket_server *websocket_server;
+
+cwebsocket_server *websocket_server_global() {
+    return websocket_server;
+}
+
 int cwebsocket_server_setnonblocking(int fd) {
 	int flags;
 	flags = fcntl(fd, F_GETFL);
