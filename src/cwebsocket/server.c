@@ -497,7 +497,9 @@ int cwebsocket_server_read_data(cwebsocket_connection *connection) {
 		}
 
 		free(payload);
-		syslog(LOG_WARNING, "cwebsocket_server_read_data: onmessage callback not defined");
+		// syslog(LOG_WARNING, "cwebsocket_server_read_data: onmessage callback not defined");
+		cwebsocket_server_write_data(connection, payload, strlen(payload), TEXT_FRAME);
+
 		return bytes_read;
 	}
 	else if(frame.fin && frame.opcode == BINARY_FRAME) {
